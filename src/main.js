@@ -156,25 +156,35 @@ const totalPrice = (docType, order, payment) => {
   let orderTotal;
 
   for (const entry of totalsData.table) {
-    if (entry[0] === "Order Total:" || entry[0] === "Total Pesanan:") {
+    if (
+      entry[0] === "Order Total:" ||
+      entry[0] === "Total Pesanan:" ||
+      entry[0] === "Gesamt:" ||
+      entry[0] === "Totaal:"
+    ) {
       orderTotal = entry[1];
       break; // Exit the loop once found
     }
   }
 
-  function convertCurrencyToFloat(currencyString) {
-    // Remove currency symbol, thousands separators, and decimal separators
-    const cleanedString = currencyString
-      .replace(/[,$.]/g, "")
-      .replace("Rp", "");
+  function extractNumericValue(formattedValue) {
+    // Use a regular expression to match numbers and commas
+    const regex = /[\d,]+/g;
 
-    // Parse the cleaned string as a float
-    const floatValue = parseFloat(cleanedString);
+    // Extract numeric parts from the formatted value
+    const numericParts = formattedValue.match(regex);
 
-    return floatValue / 100;
+    if (numericParts) {
+      // Join the numeric parts and remove commas to get the numeric value
+      const numericValue = numericParts.join("").replace(/,/g, "");
+
+      return numericValue / 100;
+    }
+
+    return null;
   }
 
-  return convertCurrencyToFloat(orderTotal);
+  return extractNumericValue(orderTotal);
 };
 
 module.exports = {

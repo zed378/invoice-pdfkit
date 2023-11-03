@@ -158,9 +158,9 @@ console.log("Language options: " + tradePDF.getLanguages());
 tradePDF.init({
   logo: fs.readFileSync("test/logo.jpg"),
   company: yourCompany,
-  language: "en",
-  locale: "en-US",
-  currency: "USD",
+  language: "nl",
+  locale: "nl",
+  currency: "EUR",
   page: { size: "A4" }, // This object is passed to pdfkit, see their documentation
   fontSize: 11,
   //fontName: "Courier", // Font is also defined in pdfkit, can be path to .ttf
