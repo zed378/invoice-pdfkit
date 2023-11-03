@@ -50,6 +50,12 @@ const packing = (...args) => generate((docType = dt.PACKING), ...args);
 const ret = (...args) => generate((docType = dt.RETURN), ...args);
 const receipt = (...args) => generate((docType = dt.RECEIPT), ...args);
 const refund = (...args) => generate((docType = dt.REFUND), ...args);
+const quoteTotal = (...args) => totalPrice((docType = dt.QUOTE), ...args);
+const invoiceTotal = (...args) => totalPrice((docType = dt.INVOICE), ...args);
+const packingTotal = (...args) => totalPrice((docType = dt.PACKING), ...args);
+const retTotal = (...args) => totalPrice((docType = dt.RETURN), ...args);
+const receiptTotal = (...args) => totalPrice((docType = dt.RECEIPT), ...args);
+const refundTotal = (...args) => totalPrice((docType = dt.REFUND), ...args);
 
 const generate = (docType, order, payment) => {
   if (!order || typeof order !== "object")
@@ -132,6 +138,45 @@ const generate = (docType, order, payment) => {
   return data;
 };
 
+const totalPrice = (docType, order, payment) => {
+  if (!order || typeof order !== "object")
+    throw Error("Missing object parameter: order");
+  if (!config.initialized) throw Error("Need to init() before generate()");
+
+  const doc = new PDFDocument({
+    bufferPages: true,
+    margins: config.defaultMargins,
+    font: config.fontName,
+    ...config.page,
+  });
+  // Section
+  const itemsData = calcItems(order);
+  const totalsData = calcTotals(doc, order, itemsData);
+
+  let orderTotal;
+
+  for (const entry of totalsData.table) {
+    if (entry[0] === "Order Total:" || entry[0] === "Total Pesanan:") {
+      orderTotal = entry[1];
+      break; // Exit the loop once found
+    }
+  }
+
+  function convertCurrencyToFloat(currencyString) {
+    // Remove currency symbol, thousands separators, and decimal separators
+    const cleanedString = currencyString
+      .replace(/[,$.]/g, "")
+      .replace("Rp", "");
+
+    // Parse the cleaned string as a float
+    const floatValue = parseFloat(cleanedString);
+
+    return floatValue / 100;
+  }
+
+  return convertCurrencyToFloat(orderTotal);
+};
+
 module.exports = {
   getLanguages,
   init,
@@ -141,4 +186,10 @@ module.exports = {
   return: ret,
   receipt,
   refund,
+  quoteTotal,
+  invoiceTotal,
+  packingTotal,
+  returnTotal: retTotal,
+  receiptTotal,
+  refundTotal,
 };

@@ -191,6 +191,19 @@ fs.writeFileSync(folder + "4_receipt.pdf", pdfData);
 pdfData = tradePDF.refund(order, payment);
 fs.writeFileSync(folder + "5_refund.pdf", pdfData);
 
+pdfData = tradePDF.quoteTotal(order, payment);
+console.log(pdfData);
+pdfData = tradePDF.invoiceTotal(order, payment);
+console.log(pdfData);
+pdfData = tradePDF.packingTotal(order, payment);
+console.log(pdfData);
+pdfData = tradePDF.returnTotal(order, payment);
+console.log(pdfData);
+pdfData = tradePDF.receiptTotal(order, payment);
+console.log(pdfData);
+pdfData = tradePDF.refundTotal(order, payment);
+console.log(pdfData);
+
 console.log("Successfully generated pdf(s)");
 
 /*

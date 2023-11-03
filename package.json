@@ -1,6 +1,6 @@
 {
   "name": "@zed378/invoice-pdfkit",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Generate an invoice, receipt or return PDF file with pdfkit",
   "main": "index.js",
   "scripts": {

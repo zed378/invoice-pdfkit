@@ -98,6 +98,7 @@ If you clone this repo, `npm run tsstart` will regenerate the example files.
 - QR-code support for both legacy bank transfers and crypto payments, especially useful for the long address payload of bitcoin lightning network invoices.
 - Short-form human readable crypto addresses such as Ethereum's ENS can be specified in either the _company_ or _payment_ object at the same location as the bank account number or IBAN/SEPA number.
 - A list of all supported fields can be found in [types/main.d.ts](types/main.d.ts). TypeScript support is optional. Most of the fields are demonstrated by the example files.
+- Add function for return total price in float. Just see examples in [test/run.ts](test/run.ts).
 
 ## Donation
 
