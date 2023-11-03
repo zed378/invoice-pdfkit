@@ -107,7 +107,7 @@ const printRow = (row, allowWriting) => {
   if (grayCounter) {
     doc
       .rect(tStart, basePosY - gap, tWidth, maxCellHeight)
-      .fill("#eee")
+      .fill("#fbf5fc")
       .fill("black");
   }
   // Start printing text
